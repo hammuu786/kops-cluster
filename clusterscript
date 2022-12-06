@@ -7,5 +7,5 @@ kops create cluster \
      --node-volume-size 10 \
      --master-size t3.medium \
      --master-volume-size 10 \
-     ##--zones ap-south-1a,ap-south-1b,ap-south-1c --yes
      --zones us-east-1a,us-east-1b,us-east-1c --yes
+    
