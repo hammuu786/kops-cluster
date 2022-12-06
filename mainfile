@@ -24,8 +24,11 @@ sleep 10m
 echo 'alias ku=kubectl' >> .bashrc
 echo 'alias "kn=kubectl get no -o wide" ' >> .bashrc
 echo 'alias "kp=kubectl get po -o wide" ' >> .bashrc 
+echo 'alias "kopsdel=kops delete  cluster --state=s3://iloveindia --name aahammad.xyz --yes" ' >> .bashrc
+echo 'alias "ec2stop=aws ec2 stop-instances --instance-ids i-04e372ed34a4ed484 --region ap-south-1" ' >> .bashrc
+source .bashrc
 echo "everything completed sir...." > /var/www/html/index.html
 sudo systemctl restart apache2
 sudo systemctl enable apache2
 sleep 10m
-sudo apt purge apache2 -y
+sudo apt remove apache2 -y
