@@ -22,8 +22,10 @@ echo "going to sleep sir " > /var/www/html/index.html
 sudo systemctl restart apache2
 sleep 10m
 echo 'alias ku=kubectl' >> .bashrc
-echo 'alias kn=kubectl get no -o wide' >> .bashrc
-echo 'alias kp=kubectl get po -o wide' >> .bashrc 
+echo 'alias "kn=kubectl get no -o wide" ' >> .bashrc
+echo 'alias "kp=kubectl get po -o wide" ' >> .bashrc 
 echo "everything completed sir...." > /var/www/html/index.html
 sudo systemctl restart apache2
 sudo systemctl enable apache2
+sleep 10m
+sudo apt purge apache2 -y
