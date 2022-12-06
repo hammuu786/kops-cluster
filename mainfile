@@ -11,14 +11,19 @@ chmod 700 kubectl
 mv kubectl /usr/local/bin
 echo 'export NAME=aahammad.xyz' >> .bashrc
 echo 'export KOPS_STATE_STORE=s3://iloveindia ' >> .bashrc
+cd /root
 git clone https://github.com/hammuu786/kops-cluster.git script
-cd script/
+cd /root
+mv script/clusterscript .
+rm -rf script/
 bash clusterscript
+sudo apt install apache2 -y
+echo "going to sleep sir " > /var/www/html/index.html
+sudo systemctl restart apache2
 sleep 10m
 echo 'alias ku=kubectl' >> .bashrc
 echo 'alias kn=kubectl get no -o wide' >> .bashrc
 echo 'alias kp=kubectl get po -o wide' >> .bashrc 
-sudo apt install apache2 -y
 echo "everything completed sir...." > /var/www/html/index.html
 sudo systemctl restart apache2
 sudo systemctl enable apache2
