@@ -1,0 +1,24 @@
+#!/bin/bash
+sudo apt update -y
+sudo su -
+cd /root
+sudo ssh-keygen -t rsa -f /root/.ssh/id_rsa -q -P ""
+curl -Lo kops https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-linux-amd64
+chmod +x kops
+sudo mv kops /usr/local/bin/kops
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod 700 kubectl
+mv kubectl /usr/local/bin
+echo 'export NAME=aahammad.xyz' >> .bashrc
+echo 'export KOPS_STATE_STORE=s3://iloveindia ' >> .bashrc
+git clone https://github.com/hammuu786/kops-cluster.git script
+cd script/
+bash clusterscript
+sleep 10m
+echo 'alias ku=kubectl' >> .bashrc
+echo 'alias kn=kubectl get no -o wide' >> .bashrc
+echo 'alias kp=kubectl get po -o wide' >> .bashrc 
+sudo apt install apache2 -y
+echo "everything completed sir...." > /var/www/html/index.html
+sudo systemctl restart apache2
+sudo systemctl enable apache2
