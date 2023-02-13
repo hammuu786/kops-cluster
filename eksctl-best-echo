@@ -1,0 +1,45 @@
+#!/bin/bash
+sudo apt update -y
+# Check if AWS CLI is already installed
+if which aws; then
+  echo "AWS CLI is already installed."
+else
+  # Install AWS CLI
+  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+  apt install unzip -y
+  unzip awscliv2.zip
+  sudo ./aws/install
+fi
+
+# Check if kubectl is already installed
+if which kubectl; then
+  echo "kubectl is already installed."
+else
+  # Install kubectl
+  curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.24.7/2022-10-31/bin/linux/amd64/kubectl
+  sudo chmod +x kubectl
+  sudo mv kubectl /usr/local/bin
+fi
+
+# Check if eksctl is already installed
+if which eksctl; then
+  echo "eksctl is already installed."
+else
+  # Install eksctl
+  curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+  sudo mv /tmp/eksctl /usr/local/bin
+fi
+
+# Add kubectl aliases to .bashrc
+echo "alias ku='kubectl'" >> ~/.bashrc
+echo "alias kd='kubectl get deploy'" >> ~/.bashrc
+echo "alias kn='kubectl get nodes'" >> ~/.bashrc
+echo "alias kdp='kubectl describe pod'" >> ~/.bashrc
+echo "alias kdn='kubectl describe no'" >> ~/.bashrc
+echo "alias ks='kubectl get svc'" >> ~/.bashrc
+
+# Reload .bashrc to activate aliases
+source ~/.bashrc
+
+# Update system packages
+sudo apt update -y
