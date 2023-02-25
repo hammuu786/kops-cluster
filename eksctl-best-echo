@@ -1,33 +1,35 @@
 #!/bin/bash
+
+# Update system packages
 sudo apt update -y
+
 # Check if AWS CLI is already installed
-if which aws; then
-  echo "AWS CLI is already installed."
-else
+if ! which aws > /dev/null; then
   # Install AWS CLI
   curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-  apt install unzip -y
+  sudo apt install unzip -y
   unzip awscliv2.zip
   sudo ./aws/install
+else
+  echo "AWS CLI is already installed."
 fi
 
 # Check if kubectl is already installed
-if which kubectl; then
-  echo "kubectl is already installed."
-else
+if ! which kubectl > /dev/null; then
   # Install kubectl
-  curl -O https://s3.us-west-2.amazonaws.com/amazon-eks/1.24.7/2022-10-31/bin/linux/amd64/kubectl
+  curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
   sudo chmod +x kubectl
-  sudo mv kubectl /usr/local/bin
+  sudo mv kubectl /usr/local/bin/
+else
+  echo "kubectl is already installed."
 fi
 
 # Check if eksctl is already installed
-if which eksctl; then
-  echo "eksctl is already installed."
-else
+if ! which eksctl > /dev/null; then
   # Install eksctl
-  curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
-  sudo mv /tmp/eksctl /usr/local/bin
+  sudo curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | sudo tar xz -C /usr/local/bin
+else
+  echo "eksctl is already installed."
 fi
 
 # Add kubectl aliases to .bashrc
@@ -40,6 +42,3 @@ echo "alias ks='kubectl get svc'" >> ~/.bashrc
 
 # Reload .bashrc to activate aliases
 source ~/.bashrc
-
-# Update system packages
-sudo apt update -y
